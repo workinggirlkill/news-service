@@ -1,0 +1,31 @@
+spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+  freemarker:
+    cache: false    #页面不加载缓存，修改即时生效
+    #    本地数据库驱动用8.0.23，云端用5.14.7,高版本也可以连接就不用5.14.7了,低版本去掉cj
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3307/test_news?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  mail:
+#    客服端账号
+    username: xxxxxxxxxx@qq.com
+#    传输协议密码，不是qq邮箱密码
+    #如何获得这个密码 https://www.bilibili.com/video/BV1PE411i7CV?p=52
+    password: xxxxxxxxxxxx
+    host: smtp.qq.com
+    #加密
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+#分页pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true

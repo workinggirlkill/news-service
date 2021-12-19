@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.news.mapper.NewsMapper">
+    <update id="setDelete" parameterType="Integer">
+        update test_news.news
+        set status = 0
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        delete from test_news.news where id=#{id}
+    </delete>
+    <update id="restore" parameterType="Integer">
+        update test_news.news
+        set status = 1
+        where id = #{id}
+    </update>
+    <insert id="insert" parameterType="news">
+        insert into test_news.news (`categoryId`, `title`, `content`, `source`, `author`, `level`)
+            values (#{categoryId},
+                   #{title},
+                   #{content},
+                   #{source},
+                   #{author},
+                   #{level})
+    </insert>
+    <update id="update" parameterType="news">
+        update test_news.news
+        set categoryId=#{categoryId},
+            title=#{title},
+            content=#{content},
+            source=#{source},
+            author=#{author},
+            level=#{level},
+            publishTime=#{publishTime}
+        where id = #{id}
+    </update>
+    <select id="selectOne" parameterType="Integer" resultType="news">
+        select *
+        from test_news.news
+        where id = #{id}
+          and status = 1
+    </select>
+    <select id="select" resultType="news">
+        select *
+        from test_news.news
+        where status = 1
+    </select>
+    <select id="selectRecycling" resultType="news">
+        select *
+        from test_news.news
+        where status = 0
+    </select>
+    <select id="selectNewsName" parameterType="String" resultType="news">
+        SELECT *
+        from test_news.news
+        where LOCATE(#{author}, `author`) > 0
+    </select>
+    <select id="selectNewsCounts" parameterType="String" resultType="Integer">
+        SELECT count(*) from test_news.news where source=#{source}
+    </select>
+    <select id="selectNewsCounts1" parameterType="String" resultType="Integer">
+        SELECT count(*) from test_news.news where title=#{title}
+    </select>
+</mapper>

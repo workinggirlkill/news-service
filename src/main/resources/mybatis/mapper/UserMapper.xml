@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.news.mapper.UserMapper">
+    <select id="queryAllUser" resultType="user">
+        select *
+        from test_news.users;
+    </select>
+    <select id="login" parameterType="user" resultType="user">
+        select *
+        from test_news.users
+        where account = #{account}
+          and password = #{password}
+    </select>
+    <delete id="deleteUser" parameterType="Integer">
+        delete
+        from test_news.users
+        where userId = #{id}
+    </delete>
+    <insert id="addUser" parameterType="user">
+        insert into test_news.users (nickname, account, password)
+        VALUES (#{nickname}, #{account}, #{password})
+    </insert>
+    <update id="updateUser" parameterType="user">
+        update test_news.users
+        set nickname=#{nickname},
+            account=#{account},
+            password=#{password}
+        where userId = #{userId}
+    </update>
+    <select id="queryOneUser" parameterType="Integer" resultType="user">
+        select *
+        from test_news.users
+        where userId = #{id}
+    </select>
+    <select id="queryLikeUser" resultType="user" parameterType="String">
+        # Parameter index out of range (2 > number of parameters, which is 1).一用下面这个就报错,还会有持续状态，改了还是没用
+#         不是它的错是我没想到模糊查询出来的数据不止一条
+        SELECT *
+        from test_news.users
+        where LOCATE(#{nickname}, `nickname`) > 0;
+    </select>
+<!--    <select id="queryLikeUser1" resultType="user" parameterType="String">-->
+<!--# 这个需要拼接，上面不需要拼接-->
+<!--        select *from test_news.users where nickname like #{nickname};-->
+<!--    </select>-->
+</mapper>
